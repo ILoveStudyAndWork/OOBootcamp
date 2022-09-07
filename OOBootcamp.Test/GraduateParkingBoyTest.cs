@@ -22,9 +22,9 @@ public class GraduateParkingBoyTest
     {
         var comingVehicle = new Vehicle("Eligible");
 
-        string actualParkingLotName = _graduateParkingBoy.Parking(comingVehicle);
+        var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
 
-        Assert.AreEqual("first parkingLot", actualParkingLotName);
+        Assert.AreEqual("first parkingLot", actualParkingLot.Name);
     }
 
     [Test]
@@ -34,8 +34,8 @@ public class GraduateParkingBoyTest
         _graduateParkingBoy.Parking(firstVehicle);
 
         var secondVehicle = new Vehicle("second");
-        var actualParkingName = _graduateParkingBoy.Parking(secondVehicle);
+        var actualParkingLot = _graduateParkingBoy.Parking(secondVehicle);
 
-        Assert.AreEqual("second parkingLot", actualParkingName);
+        Assert.AreEqual("second parkingLot", actualParkingLot.Name);
     }
 }
