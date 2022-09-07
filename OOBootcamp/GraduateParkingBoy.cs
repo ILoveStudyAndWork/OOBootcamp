@@ -3,26 +3,33 @@ namespace OOBootcamp;
 public class GraduateParkingBoy
 {
     private List<string> parkingHistory = new List<string>();
-    public string Parking(Vehicle comingVehicle, List<ParkingLot> parkingLots)
+    private readonly List<ParkingLot> _parkingLots;
+
+    public GraduateParkingBoy(List<ParkingLot> parkingLots)
+    {
+        _parkingLots = parkingLots;
+    }
+
+    public string Parking(Vehicle comingVehicle)
     {
         if (parkingHistory.Count == 0)
         {
-            parkingHistory.Add(parkingLots[0].Name);
-            return parkingLots[0].Name;
+            parkingHistory.Add(_parkingLots[0].Name);
+            return _parkingLots[0].Name;
         }
 
         string lastParkingLotName = parkingHistory[^1];
         int result = -1;
-        for (int index = 0; index < parkingLots.Count; index++)
+        for (int index = 0; index < _parkingLots.Count; index++)
         {
-            if (parkingLots[index].Name.Equals(lastParkingLotName))
+            if (_parkingLots[index].Name.Equals(lastParkingLotName))
             {
                 result = index;
                 break;
             }
         }
 
-        parkingHistory.Add(parkingLots[result + 1].Name);
-        return parkingLots[result + 1].Name;
+        parkingHistory.Add(_parkingLots[result + 1].Name);
+        return _parkingLots[result + 1].Name;
     }
 }
