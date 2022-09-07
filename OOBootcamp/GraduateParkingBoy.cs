@@ -2,5 +2,8 @@ namespace OOBootcamp;
 
 public class GraduateParkingBoy
 {
-    // Write your logic here
+    public string Parking(Vehicle comingVehicle, ParkingLot[] parkingLots)
+    {
+        return parkingLots[0].Name;
+    }
 }
