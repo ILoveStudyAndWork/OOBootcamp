@@ -18,18 +18,14 @@ public class GraduateParkingBoy
             return _parkingLots[0];
         }
 
-        string lastParkingLotName = parkingHistory[^1].Name;
-        int result = -1;
-        for (int index = 0; index < _parkingLots.Count; index++)
-        {
-            if (_parkingLots[index].Name.Equals(lastParkingLotName))
-            {
-                result = index;
-                break;
-            }
-        }
+        var nextParkingLot = FindNextParkingLot();
+        parkingHistory.Add(nextParkingLot);
+        return nextParkingLot;
+    }
 
-        parkingHistory.Add(_parkingLots[result + 1]);
-        return _parkingLots[result + 1];
+    private ParkingLot FindNextParkingLot()
+    {
+        var lastParkingLotIndex = _parkingLots.FindIndex(parkingLot => parkingLot.Equals(parkingHistory[^1]));
+        return _parkingLots[lastParkingLotIndex + 1];
     }
 }
