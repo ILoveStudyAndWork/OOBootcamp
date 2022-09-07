@@ -3,8 +3,7 @@ namespace OOBootcamp;
 public class GraduateParkingBoy
 {
     private List<string> parkingHistory = new List<string>();
-
-    public string Parking(Vehicle comingVehicle, ParkingLot[] parkingLots)
+    public string Parking(Vehicle comingVehicle, List<ParkingLot> parkingLots)
     {
         if (parkingHistory.Count == 0)
         {
@@ -14,7 +13,7 @@ public class GraduateParkingBoy
 
         string lastParkingLotName = parkingHistory[^1];
         int result = -1;
-        for (int index = 0; index < parkingLots.Length; index++)
+        for (int index = 0; index < parkingLots.Count; index++)
         {
             if (parkingLots[index].Name.Equals(lastParkingLotName))
             {

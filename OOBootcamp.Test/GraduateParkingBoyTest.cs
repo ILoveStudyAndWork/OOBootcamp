@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace OOBootcamp;
@@ -6,16 +7,14 @@ public class GraduateParkingBoyTest
 {
     private GraduateParkingBoy _graduateParkingBoy;
 
-    private readonly ParkingLot[] _parkingLots =
-    {
-        new(1, 6.0, "first parkingLot"),
-        new(1, 6.0, "second parkingLot")
-    };
+    private List<ParkingLot> parkingLots = new(); 
 
     [SetUp]
     public void SetUp()
     {
         _graduateParkingBoy = new GraduateParkingBoy();
+        parkingLots.Add(new(1, 6.0, "first parkingLot"));
+        parkingLots.Add(new(1, 6.0, "second parkingLot"));
     }
 
     [Test]
@@ -23,7 +22,7 @@ public class GraduateParkingBoyTest
     {
         var comingVehicle = new Vehicle("Eligible");
 
-        string actualParkingLotName = _graduateParkingBoy.Parking(comingVehicle, _parkingLots);
+        string actualParkingLotName = _graduateParkingBoy.Parking(comingVehicle, parkingLots);
 
         Assert.AreEqual("first parkingLot", actualParkingLotName);
     }
@@ -32,10 +31,10 @@ public class GraduateParkingBoyTest
     public void should_park_to_second_parking_lot_when_parking_given_first_parking_lot_have_one_car_park_before()
     {
         var firstVehicle = new Vehicle("first");
-        _graduateParkingBoy.Parking(firstVehicle, _parkingLots);
+        _graduateParkingBoy.Parking(firstVehicle, parkingLots);
 
         var secondVehicle = new Vehicle("second");
-        var actualParkingName = _graduateParkingBoy.Parking(secondVehicle, _parkingLots);
+        var actualParkingName = _graduateParkingBoy.Parking(secondVehicle, parkingLots);
 
         Assert.AreEqual("second parkingLot", actualParkingName);
     }
