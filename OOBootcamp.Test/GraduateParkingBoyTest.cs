@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Moq;
 using NUnit.Framework;
 
 namespace OOBootcamp;
@@ -7,13 +8,20 @@ public class GraduateParkingBoyTest
 {
     private GraduateParkingBoy _graduateParkingBoy;
 
-    private readonly List<ParkingLot> parkingLots = new(); 
+    private List<ParkingLot> parkingLots;
+    private Mock<ParkingLot> parkingLotA;
+    private Mock<ParkingLot> parkingLotB;
 
     [SetUp]
     public void SetUp()
     {
-        parkingLots.Add(new(1, 6.0, "first parkingLot"));
-        parkingLots.Add(new(1, 6.0, "second parkingLot"));
+        parkingLotA = new Mock<ParkingLot>(1, 6, "first parkingLot");
+        parkingLotB = new Mock<ParkingLot>(1, 6, "second parkingLot");
+        parkingLots = new()
+        {
+            parkingLotA.Object,
+            parkingLotB.Object
+        };
         _graduateParkingBoy = new GraduateParkingBoy(parkingLots);
     }
 
@@ -25,6 +33,7 @@ public class GraduateParkingBoyTest
         var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
 
         Assert.AreEqual("first parkingLot", actualParkingLot.Name);
+        parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(It.IsAny<Vehicle>()), Times.Once);
     }
 
     [Test]
@@ -37,5 +46,7 @@ public class GraduateParkingBoyTest
         var actualParkingLot = _graduateParkingBoy.Parking(secondVehicle);
 
         Assert.AreEqual("second parkingLot", actualParkingLot.Name);
+        parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(firstVehicle), Times.Once);
+        parkingLotB.Verify(parkingLot => parkingLot.ParkVehicle(secondVehicle), Times.Once);
     }
 }

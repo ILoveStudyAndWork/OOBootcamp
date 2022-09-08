@@ -18,7 +18,7 @@ public class ParkingLot
         _parkedVehicles = new ConcurrentDictionary<Vehicle, DateTime>();
     }
     
-    public bool ParkVehicle(Vehicle vehicle)
+    public virtual bool ParkVehicle(Vehicle vehicle)
     {
         return AvailableCount > 0 && _parkedVehicles.TryAdd(vehicle, DateTime.UtcNow);
     }

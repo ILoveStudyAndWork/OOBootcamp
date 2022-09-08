@@ -15,10 +15,12 @@ public class GraduateParkingBoy
         if (parkingHistory.Count == 0)
         {
             parkingHistory.Add(_parkingLots[0]);
+            _parkingLots[0].ParkVehicle(comingVehicle);
             return _parkingLots[0];
         }
 
         var nextParkingLot = FindNextParkingLot();
+        nextParkingLot.ParkVehicle(comingVehicle);
         parkingHistory.Add(nextParkingLot);
         return nextParkingLot;
     }
