@@ -15,9 +15,9 @@ public class GraduateParkingBoyTest
     [SetUp]
     public void SetUp()
     {
-        parkingLotA = new Mock<ParkingLot>(1, 6, "first parkingLot");
-        parkingLotB = new Mock<ParkingLot>(1, 6, "second parkingLot");
-        parkingLots = new()
+        parkingLotA = new Mock<ParkingLot>(1, 6, "a parking lot");
+        parkingLotB = new Mock<ParkingLot>(1, 6, "b parking lot");
+        parkingLots = new List<ParkingLot>
         {
             parkingLotA.Object,
             parkingLotB.Object
@@ -26,27 +26,27 @@ public class GraduateParkingBoyTest
     }
 
     [Test]
-    public void should_park_to_first_parking_lot_when_parking_given_parking_empty_and_no_car_park()
+    public void should_park_to_a_when_parking_given_a_and_b_all_available_and_no_past_parking()
     {
-        var comingVehicle = new Vehicle("Eligible");
+        var comingVehicle = new Vehicle("Coming");
 
         var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
 
-        Assert.AreEqual("first parkingLot", actualParkingLot.Name);
+        Assert.AreEqual("a parking lot", actualParkingLot.Name);
         parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(It.IsAny<Vehicle>()), Times.Once);
     }
 
     [Test]
-    public void should_park_to_second_parking_lot_when_parking_given_first_parking_lot_have_one_car_park_before()
+    public void should_park_to_b_when_parking_given_a_and_b_available_and_have_past_parking_to_a()
     {
-        var firstVehicle = new Vehicle("first");
-        _graduateParkingBoy.Parking(firstVehicle);
+        var pastVehicle = new Vehicle("last park");
+        _graduateParkingBoy.Parking(pastVehicle);
 
-        var secondVehicle = new Vehicle("second");
-        var actualParkingLot = _graduateParkingBoy.Parking(secondVehicle);
+        var comingVehicle = new Vehicle("Coming");
+        var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
 
-        Assert.AreEqual("second parkingLot", actualParkingLot.Name);
-        parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(firstVehicle), Times.Once);
-        parkingLotB.Verify(parkingLot => parkingLot.ParkVehicle(secondVehicle), Times.Once);
+        Assert.AreEqual("b parking lot", actualParkingLot.Name);
+        parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(pastVehicle), Times.Once);
+        parkingLotB.Verify(parkingLot => parkingLot.ParkVehicle(comingVehicle), Times.Once);
     }
 }
