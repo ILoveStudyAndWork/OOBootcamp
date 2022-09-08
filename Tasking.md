@@ -1,6 +1,7 @@
 ## Park Vehicle
 
 - when 1 vehicle coming, given a and b all available and no past parking, then parking to a
+- when 1 vehicle coming, given only a not available and no past parking, then parking to b
 - when 1 vehicle coming, given a and b all available and have past parking to a, then parking to b. 
 - when 1 vehicle coming, give a and b all available and have past parking to b, then parking to a 
 - when 1 vehicle coming, give a is full and b available and past parking to a, then parking to b 
