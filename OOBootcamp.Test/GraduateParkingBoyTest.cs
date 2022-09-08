@@ -14,8 +14,8 @@ public class GraduateParkingBoyTest
 
     private void SetUpWithDefault()
     {
-        parkingLotA = new Mock<ParkingLot>(1, 6, "a parking lot");
-        parkingLotB = new Mock<ParkingLot>(1, 6, "b parking lot");
+        parkingLotA = new Mock<ParkingLot>(2, 6, "a parking lot");
+        parkingLotB = new Mock<ParkingLot>(2, 6, "b parking lot");
         parkingLots = new List<ParkingLot>
         {
             parkingLotA.Object,
@@ -68,5 +68,21 @@ public class GraduateParkingBoyTest
         Assert.AreEqual("b parking lot", actualParkingLot.Name);
         parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(pastVehicle), Times.Once);
         parkingLotB.Verify(parkingLot => parkingLot.ParkVehicle(comingVehicle), Times.Once);
+    }
+    
+    [Test]
+    public void should_park_to_a_when_parking_given_a_and_b_available_and_have_past_parking_to_b()
+    {
+        SetUpWithDefault();
+        var secondLastVehicle = new Vehicle("second last park");
+        _graduateParkingBoy.Parking(secondLastVehicle);
+        var lastPastVehicle = new Vehicle("last park");
+        _graduateParkingBoy.Parking(lastPastVehicle);
+
+        var comingVehicle = new Vehicle("Coming");
+        var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
+
+        Assert.AreEqual("a parking lot", actualParkingLot.Name);
+        parkingLotA.Verify(parkingLot => parkingLot.ParkVehicle(comingVehicle), Times.Once());
     }
 }

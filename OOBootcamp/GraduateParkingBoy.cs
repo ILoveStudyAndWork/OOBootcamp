@@ -31,6 +31,7 @@ public class GraduateParkingBoy
     private ParkingLot FindNextParkingLotOfLastPark()
     {
         var lastParkingLotIndex = _parkingLots.FindIndex(parkingLot => parkingLot.Equals(parkingHistory[^1]));
-        return _parkingLots[lastParkingLotIndex + 1];
+        var firstAvailableParkingLotAfterLast = _parkingLots.FindIndex(lastParkingLotIndex + 1, parkingLot => parkingLot.AvailableCount > 0);
+        return firstAvailableParkingLotAfterLast == -1 ? GetFirstAvailableParkingLotInOrder() : _parkingLots[firstAvailableParkingLotAfterLast];
     }
 }
