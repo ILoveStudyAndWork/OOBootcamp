@@ -17,15 +17,15 @@ public class ParkingLotTest
     [Test]
     public void should_park_vehicle_successfully_when_ParkVehicle_given_parking_lot_has_available_space()
     {
-        Assert.True(_parkingLot.ParkVehicle(new Vehicle(LICENSE_PLATE)));
+        Assert.True(_parkingLot.ParkVehicle(new Vehicle(LICENSE_PLATE, "default")));
     }
-    
+
     [Test]
     public void should_retrieve_vehicle_with_correct_fee_when_ParkVehicle_given_vehicle_is_found()
     {
-        _parkingLot.ParkVehicle(new Vehicle(LICENSE_PLATE));
-        
-        var fee = _parkingLot.RetrieveVehicle(new Vehicle(LICENSE_PLATE));
+        _parkingLot.ParkVehicle(new Vehicle(LICENSE_PLATE,"default"));
+
+        var fee = _parkingLot.RetrieveVehicle(new Vehicle(LICENSE_PLATE, "default"));
 
         Assert.AreEqual(5.0, fee);
     }

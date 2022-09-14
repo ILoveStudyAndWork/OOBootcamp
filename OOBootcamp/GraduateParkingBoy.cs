@@ -30,7 +30,7 @@ public class GraduateParkingBoy
 
     public double RetrieveVehicle(string licensePlate)
     {
-        var vehicle = new Vehicle(licensePlate);
+        var vehicle = new Vehicle(licensePlate, "default");
         if (_vehicleLocation.ContainsKey(vehicle))
         {
             return _parkingLots[_vehicleLocation[vehicle]].RetrieveVehicle(vehicle);
