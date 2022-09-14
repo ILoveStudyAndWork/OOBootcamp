@@ -15,8 +15,7 @@ public class SpecializedParkingBoyTest
         };
 
         var specializedParkingBoy = new SpecializedParkingBoy("default", parkingLots);
-        var vehicle = new Vehicle("license", "huoche");
-
+        var vehicle = new Vehicle("license") { Type = "huoche" };
         Assert.Throws<CertificateNotMatchException>(() => specializedParkingBoy.ParkVehicle(vehicle));
     }
 
@@ -31,7 +30,7 @@ public class SpecializedParkingBoyTest
         };
 
         var specializedParkingBoy = new SpecializedParkingBoy("huoche", parkingLots);
-        var vehicle = new Vehicle("license", "huoche");
+        var vehicle = new Vehicle("license") { Type = "huoche" };
 
         var parkingLot = specializedParkingBoy.ParkVehicle(vehicle);
         Assert.AreEqual("A", parkingLot.Name);
@@ -47,9 +46,10 @@ public class SpecializedParkingBoyTest
             new(5, 5.0, "A"),
             new(6, 5.0, "B")
         };
+
         var specializedParkingBoy = new SpecializedParkingBoy("huoche", parkingLots);
-        var vehicle = new Vehicle("license", "huoche");
-        specializedParkingBoy.ParkVehicle(new Vehicle("license1", "huoche"));
+        var vehicle = new Vehicle("license") { Type = "huoche" };
+        specializedParkingBoy.ParkVehicle(new Vehicle("license1") { Type = "huoche" });
 
         var parkingLot = specializedParkingBoy.ParkVehicle(vehicle);
 
@@ -66,7 +66,7 @@ public class SpecializedParkingBoyTest
             new(0, 5.0, "B")
         };
         var specializedParkingBoy = new SpecializedParkingBoy("huoche", parkingLots);
-        var vehicle = new Vehicle("license", "huoche");
+        var vehicle = new Vehicle("license") { Type = "huoche" };
 
         var parkingLot = specializedParkingBoy.ParkVehicle(vehicle);
 
@@ -83,8 +83,8 @@ public class SpecializedParkingBoyTest
             new(0, 5.0, "B")
         };
         var specializedParkingBoy = new SpecializedParkingBoy("huoche", parkingLots);
-        var vehicle = new Vehicle("license", "huoche");
-        
+        var vehicle = new Vehicle("license") { Type = "huoche" };
+
         Assert.Throws<NoParkingSlotAvailableException>(() => specializedParkingBoy.ParkVehicle(vehicle));
     }
 }

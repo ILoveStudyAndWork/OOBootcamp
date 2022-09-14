@@ -1,7 +1,6 @@
 namespace OOBootcamp;
 
-public record Vehicle(string LicensePlate, string Type)
+public record Vehicle(string LicensePlate)
 {
-    public readonly string LicensePlate = LicensePlate;
-    public readonly string Type = Type;
+    public string Type { get; init; } = "default";
 }
