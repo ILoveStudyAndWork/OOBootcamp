@@ -10,16 +10,8 @@ public class SpecializedParkingBoy : SmartParkingBoy
 
     public ParkingLot ParkVehicle(Vehicle vehicle)
     {
-        if (!vehicle.Type.Equals(_certificate))
-        {
-            throw new CertificateNotMatchException();    
-        }
-        else
-        {
-            return base.ParkVehicle(vehicle);
-        }
-
-        
+        if (!vehicle.Type.Equals(_certificate)) throw new CertificateNotMatchException();
+        return base.ParkVehicle(vehicle);
     }
     
 }
