@@ -87,4 +87,33 @@ public class SpecializedParkingBoyTest
 
         Assert.Throws<NoParkingSlotAvailableException>(() => specializedParkingBoy.ParkVehicle(vehicle));
     }
+
+    [Test]
+    public void
+        should_throw_exception_when_retrieve_given_parking_boy_vehicle_not_exist()
+    {
+        var parkingLots = new List<ParkingLot>
+        {
+            new(1, 5.0, "A"),
+        };
+        var specializedParkingBoy = new SpecializedParkingBoy("trunk", parkingLots);
+
+        Assert.Throws<VehicleNotFoundException>(() => specializedParkingBoy.RetrieveVehicle("liscens1"));
+    }
+    
+    [Test]
+    public void
+        should_return_parking_fee_when_retrieve_given_vehicle_exist()
+    {
+        var parkingLots = new List<ParkingLot>
+        {
+            new(1, 5, "A"),
+        };
+        var specializedParkingBoy = new SpecializedParkingBoy("default", parkingLots);
+        var vehicle = new Vehicle("license") { Type = "default" };
+        specializedParkingBoy.ParkVehicle(vehicle);
+
+        var retrieveVehicle = specializedParkingBoy.RetrieveVehicle("license");
+        Assert.That(() => retrieveVehicle, Is.EqualTo(5).After(1).Seconds);
+    }
 }
