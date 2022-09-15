@@ -2,25 +2,26 @@ namespace OOBootcamp;
 
 public class GraduateParkingBoy
 {
-    private List<ParkingLot> parkingHistory = new();
+    private Dictionary<Vehicle, ParkingLot> parkingLocations;
     private readonly List<ParkingLot> _parkingLots;
 
     public GraduateParkingBoy(List<ParkingLot> parkingLots)
     {
         _parkingLots = parkingLots;
+        parkingLocations = new Dictionary<Vehicle, ParkingLot>(50);
     }
 
     public ParkingLot Parking(Vehicle comingVehicle)
     {
         var nextParkingLot = FindNextParkingLot();
         nextParkingLot.ParkVehicle(comingVehicle);
-        parkingHistory.Add(nextParkingLot);
+        parkingLocations.Add(comingVehicle, nextParkingLot);
         return nextParkingLot;
     }
 
     private ParkingLot FindNextParkingLot()
     {
-        return parkingHistory.Count == 0 ? GetFirstAvailableParkingLotInOrder() : FindNextParkingLotOfLastPark();
+        return parkingLocations.Count == 0 ? GetFirstAvailableParkingLotInOrder() : FindNextParkingLotOfLastPark();
     }
 
     private ParkingLot? GetFirstAvailableParkingLotInOrder()
@@ -31,11 +32,17 @@ public class GraduateParkingBoy
 
     private ParkingLot FindNextParkingLotOfLastPark()
     {
-        var lastParkingLotIndex = _parkingLots.FindIndex(parkingLot => parkingLot.Equals(parkingHistory[^1]));
+        var lastParkingLotIndex = _parkingLots.FindIndex(parkingLot => parkingLot.Equals(parkingLocations.Values.Last()));
         var firstAvailableParkingLotAfterLast =
             _parkingLots.FindIndex(lastParkingLotIndex + 1, parkingLot => parkingLot.AvailableCount > 0);
         return firstAvailableParkingLotAfterLast == -1
             ? GetFirstAvailableParkingLotInOrder()
             : _parkingLots[firstAvailableParkingLotAfterLast];
+    }
+
+    public double RetrieveVehicle(string licensePlate)
+    {
+        var vehicle = new Vehicle(licensePlate);
+        return parkingLocations.ContainsKey(vehicle) ? parkingLocations[vehicle].RetrieveVehicle(vehicle) : 0.0;
     }
 }
