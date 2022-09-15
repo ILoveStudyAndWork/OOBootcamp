@@ -118,4 +118,59 @@ public class GraduateParkingBoyTest
 
         Assert.AreEqual("b parking lot", actualParkingLot.Name);
     }
+
+    [Test]
+    public void should_park_to_a_when_parking_given_b_not_available_and_a_available_and_have_past_parking_to_a()
+    {
+        parkingLotA = new ParkingLot(2, 6, "a parking lot");
+        parkingLotB = new ParkingLot(0, 6, "b parking lot");
+        parkingLots = new List<ParkingLot>
+        {
+            parkingLotA, parkingLotB
+        };
+        _graduateParkingBoy = new GraduateParkingBoy(parkingLots);
+        var lastPastVehicle = new Vehicle("last park");
+        _graduateParkingBoy.Parking(lastPastVehicle);
+
+        var comingVehicle = new Vehicle("Coming");
+        var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
+
+        Assert.AreEqual("a parking lot", actualParkingLot.Name);
+    }
+
+    [Test]
+    public void should_park_to_a_when_parking_given_b_not_available_and_a_available_and_have_past_parking_to_b()
+    {
+        parkingLotA = new ParkingLot(2, 6, "a parking lot");
+        parkingLotB = new ParkingLot(1, 6, "b parking lot");
+        parkingLots = new List<ParkingLot>
+        {
+            parkingLotA, parkingLotB
+        };
+        _graduateParkingBoy = new GraduateParkingBoy(parkingLots);
+        var secondLastVehicle = new Vehicle("second last park");
+        _graduateParkingBoy.Parking(secondLastVehicle);
+        var lastPastVehicle = new Vehicle("last park");
+        _graduateParkingBoy.Parking(lastPastVehicle);
+
+        var comingVehicle = new Vehicle("Coming");
+        var actualParkingLot = _graduateParkingBoy.Parking(comingVehicle);
+
+        Assert.AreEqual("a parking lot", actualParkingLot.Name);
+    }
+
+    [Test]
+    public void should_throw_exception_when_parking_given_both_a_and_b_are_not_available_()
+    {
+        parkingLotA = new ParkingLot(0, 6, "a parking lot");
+        parkingLotB = new ParkingLot(0, 6, "b parking lot");
+        parkingLots = new List<ParkingLot>
+        {
+            parkingLotA, parkingLotB
+        };
+        _graduateParkingBoy = new GraduateParkingBoy(parkingLots);
+        var comingVehicle = new Vehicle("Coming");
+
+        Assert.Throws<NoParkingSlotAvailableException>(() => _graduateParkingBoy.Parking(comingVehicle));
+    }
 }

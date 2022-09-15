@@ -25,13 +25,17 @@ public class GraduateParkingBoy
 
     private ParkingLot? GetFirstAvailableParkingLotInOrder()
     {
-        return _parkingLots.Find(parkingLot => parkingLot.AvailableCount > 0);
+        return _parkingLots.Find(parkingLot => parkingLot.AvailableCount > 0) ??
+               throw new NoParkingSlotAvailableException();
     }
 
     private ParkingLot FindNextParkingLotOfLastPark()
     {
         var lastParkingLotIndex = _parkingLots.FindIndex(parkingLot => parkingLot.Equals(parkingHistory[^1]));
-        var firstAvailableParkingLotAfterLast = _parkingLots.FindIndex(lastParkingLotIndex + 1, parkingLot => parkingLot.AvailableCount > 0);
-        return firstAvailableParkingLotAfterLast == -1 ? GetFirstAvailableParkingLotInOrder() : _parkingLots[firstAvailableParkingLotAfterLast];
+        var firstAvailableParkingLotAfterLast =
+            _parkingLots.FindIndex(lastParkingLotIndex + 1, parkingLot => parkingLot.AvailableCount > 0);
+        return firstAvailableParkingLotAfterLast == -1
+            ? GetFirstAvailableParkingLotInOrder()
+            : _parkingLots[firstAvailableParkingLotAfterLast];
     }
 }

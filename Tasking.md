@@ -7,7 +7,7 @@
 5. when 1 vehicle coming, give a is full and b available and past parking to a, then parking to b 
 6. when 1 vehicle coming, give a is full and b available and past parking to b, then parking to b 
 7. when 1 vehicle coming, give a available and b is full and past parking to a, then parking to a 
-8. when 1 vehicle coming, give a available and b is full and past parking to b, then parking to b 
+8. when 1 vehicle coming, give a available and b is full and past parking to b, then parking to a 
 9. when 1 vehicle coming, given a and b all full, and throw exception
 
 Optional: multiple parkingLots(more than 2)
