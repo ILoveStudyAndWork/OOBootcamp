@@ -43,6 +43,6 @@ public class GraduateParkingBoy
     public double RetrieveVehicle(string licensePlate)
     {
         var vehicle = new Vehicle(licensePlate);
-        return parkingLocations.ContainsKey(vehicle) ? parkingLocations[vehicle].RetrieveVehicle(vehicle) : 0.0;
+        return parkingLocations.ContainsKey(vehicle) ? parkingLocations[vehicle].RetrieveVehicle(vehicle) : throw new VehicleNotFoundException(vehicle);
     }
 }

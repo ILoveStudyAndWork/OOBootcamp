@@ -189,4 +189,17 @@ public class GraduateParkingBoyTest
 
         Assert.That(() => fee, Is.EqualTo(6).After(1).Seconds);
     }
+    
+    [Test]
+    public void should_throw_exception_when_retrieve_vehicle_given_vehicle_not_exist()
+    {
+        parkingLotA = new ParkingLot(1, 6, "a parking lot");
+        parkingLots = new List<ParkingLot>
+        {
+            parkingLotA
+        };
+        _graduateParkingBoy = new GraduateParkingBoy(parkingLots);
+
+        Assert.Throws<VehicleNotFoundException>(() =>  _graduateParkingBoy.RetrieveVehicle("Coming"));
+    }
 }
