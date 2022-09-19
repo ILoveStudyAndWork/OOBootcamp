@@ -1,3 +1,4 @@
+# Graduate paking boy 
 ## Park Vehicle
 
 1. when 1 vehicle coming, given a and b all available and no past parking, then parking to a
@@ -22,6 +23,17 @@ requirement to be confirmed: need to return the money to consumer?
 then retrieve the vehicle and release the parking space
 - when 1 vehicle need to be retrieved, given vehicle haven't been parked inside the parking lots, 
 then throw VehicleNotFoundException
+<hr> </hr>
 
+# smart parking boy
+## park vehicle
+- when 1 vehicle coming, given a have more available parking space, then park to a
+- when 1 vehicle coming, given a and b have the same available parking space, but a have higher available rate, then park to a
+- when 1 vehicle coming, given a and b is not available, then throw exception
+## retrieve vehicle
+- when 1 vehicle need to be retrieved, given vehicle have been parked inside the parking lots,
+  then retrieve the vehicle and release the parking space
+- when 1 vehicle need to be retrieved, given vehicle haven't been parked inside the parking lots,
+  then throw VehicleNotFoundException
 
 
