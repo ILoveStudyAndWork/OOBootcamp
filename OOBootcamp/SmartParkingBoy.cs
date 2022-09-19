@@ -11,8 +11,17 @@ public class SmartParkingBoy
 
     public ParkingLot ParkVehicle(Vehicle vehicle)
     {
-        var parkingLotHasMaxAvailabilityCount = _parkingLots.MaxBy(parkingLot => parkingLot.AvailableCount);
-        parkingLotHasMaxAvailabilityCount.ParkVehicle(vehicle);
-        return parkingLotHasMaxAvailabilityCount;
+        var maxAvailabilityCount = _parkingLots.Max(parkingLot => parkingLot.AvailableCount);
+        var result = _parkingLots.FindAll(parkingLot => parkingLot.AvailableCount == maxAvailabilityCount)
+            .MaxBy(GetAvailabilityRate);
+
+        result.ParkVehicle(vehicle);
+        return result;
+    }
+
+    private Double GetAvailabilityRate(ParkingLot parkingLotHasMaxAvailabilityCount)
+    {
+        return Convert.ToDouble(parkingLotHasMaxAvailabilityCount.AvailableCount) /
+               Convert.ToDouble(parkingLotHasMaxAvailabilityCount.MaxCapacity);
     }
 }
