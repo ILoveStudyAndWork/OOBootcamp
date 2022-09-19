@@ -12,6 +12,10 @@ public class SmartParkingBoy
     public ParkingLot ParkVehicle(Vehicle vehicle)
     {
         var maxAvailabilityCount = _parkingLots.Max(parkingLot => parkingLot.AvailableCount);
+        if (maxAvailabilityCount == 0)
+        {
+            throw new NoParkingSlotAvailableException();
+        }
         var result = _parkingLots.FindAll(parkingLot => parkingLot.AvailableCount == maxAvailabilityCount)
             .MaxBy(GetAvailabilityRate);
 
