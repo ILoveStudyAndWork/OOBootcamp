@@ -52,4 +52,46 @@ public class SmartParkingBoyTest
 
         Assert.Throws<NoParkingSlotAvailableException>(() => smartParkingBoy.ParkVehicle(new Vehicle("coming")));
     }
+    
+    [Test]
+    public void should_return_fee_when_retrieve_vehicle_given_vehicle_has_been_parked_to_parking_lot()
+    {
+        List<ParkingLot> parkingLots = new List<ParkingLot>
+        {
+            new(1, 5, "b parking lot")
+        };
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        var comingVehicle = new Vehicle("coming");
+        smartParkingBoy.ParkVehicle(comingVehicle);
+
+        var fee = smartParkingBoy.RetrieveVehicle("coming");
+        
+        Assert.AreEqual(5, fee);
+    }
+    
+    [Test]
+    public void should_throw_exception_when_retrieve_vehicle_given_vehicle_has_not_been_parked_to_parking_lot()
+    {
+        List<ParkingLot> parkingLots = new List<ParkingLot>
+        {
+            new(1, 5, "b parking lot")
+        };
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        
+        Assert.Throws<VehicleNotFoundException>(() => smartParkingBoy.RetrieveVehicle("coming"));
+    }
+    
+    [Test]
+    public void should_throw_exception_when_retrieve_vehicle_given_vehicle_has_been_retrieve_from_parking_lot()
+    {
+        List<ParkingLot> parkingLots = new List<ParkingLot>
+        {
+            new(1, 5, "b parking lot")
+        };
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkingLots);
+        smartParkingBoy.ParkVehicle(new Vehicle("coming"));
+        smartParkingBoy.RetrieveVehicle("coming");
+            
+        Assert.Throws<VehicleNotFoundException>(() => smartParkingBoy.RetrieveVehicle("coming"));
+    }
 }
